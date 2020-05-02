@@ -1,0 +1,41 @@
+version: '3'
+services:
+        mydatabase:
+                image: mysql:5.7
+                volumes:
+                        - mysql_storage_new:/var/lib/mysql
+                restart: always
+                environment:
+                        MYSQL_ROOT_PASSWORD: kaju
+                        MYSQL_USER: priya
+                        MYSQL_PASSWORD: kaju
+                        MYSQL_DATABASE: mydb
+
+
+        wordpres:
+                image: wordpress:5.1.1-php7.3-apache
+                restart: always
+                depends_on:
+                        - mydatabase
+                ports:
+                        - 8081:80
+                environment:
+                        WORDPRESS_DB_HOST: mydatabase
+                        WORDPRESS_DB_USER: priya
+                        WORDPRESS_DB_PASSWORD: kaju
+                        WORDPRESS_DB_NAME: mydb
+                volumes:
+                        - wp_storage_new:/var/www/html
+
+volumes:
+        wp_storage_new:
+        mysql_storage_new:
+
+
+
+
+
+
+
+
+
